@@ -1,5 +1,5 @@
 # Use the official go docker image built on debian.
-FROM golang:1.4.2
+FROM golang
 
 # Grab the source code and add it to the workspace.
 ADD . /go/src/github.com/karesti/cm-voting
