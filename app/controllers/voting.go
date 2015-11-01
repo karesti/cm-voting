@@ -6,12 +6,12 @@ import (
 
 
 
-type Tracks struct {
+type Voting struct {
 	*revel.Controller
 }
 
 
-func (c Tracks) List() revel.Result {
-	tracks := db.LoadTracks()
-	return c.Render(tracks)
+func (c Voting) List() revel.Result {
+	slots := db.LoadSlots()
+	return c.Render(slots)
 }

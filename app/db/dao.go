@@ -14,3 +14,15 @@ func LoadTracks() []Track{
 
 	return results
 }
+
+func LoadSlots() []Slot{
+	var results []Slot
+
+	err := Slots.Find(bson.M{}).All(&results)
+
+	if err != nil {
+		panic(err);
+	}
+
+	return results
+}

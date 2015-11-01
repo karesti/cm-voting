@@ -5,23 +5,28 @@
     <div class="container">
         <div class="row">
             <div class="hero-text">
-                <h1>tracks!</h1>
+                <h1>Vote your slot!</h1>
                 <p></p>
             </div>
         </div>
     </div>
 </header>
 
-{{if .tracks}}
-
-    {{range .tracks}}
-        {{.Name}}
-    {{end}}
-
-{{end}}
-
 <div class="container">
     <div class="row">
+        <table>
+            <th>Title</th>
+
+            {{if .slots}}
+
+            {{range .slots}}
+            <tr>
+                <td>{{.Contents.Title}}</td>
+            </tr>
+            {{end}}
+
+            {{end}}
+        </table>
         <div class="span6">
             {{template "flash.html" .}}
         </div>
