@@ -9,7 +9,7 @@ Install docker and run the app with the provided image.
 ```
 docker pull mongo
 
-docker run -i -t -name mongo_cmvoting -p 27017:27017 mongo
+docker run -i -t --name mongo_cmvoting -p 27017:27017 mongo
 ```
 
 To check if this is working go to the database console
@@ -49,7 +49,7 @@ If you are lazy :) you can execute buildAndRun.sh which will execute build image
 http://localhost:9000/
 ```
 
-If you are running on mac like me, you might be using Docker-Machine. The ip on URL should 
+If you are running on mac like me, you might be using Docker-Machine. Instead of using localhost, you must use the IP of your host which can be retrieved via : 
 
 ```
 docker-machine ls
