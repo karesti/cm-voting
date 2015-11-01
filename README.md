@@ -38,6 +38,11 @@ docker build -t cm-voting .
 docker run -i -t -p 9000:9000 --link mongo_cmvoting:mongo cm-voting env
 ```
 
+If you are lazy :) you can execute buildAndRun.sh which will execute build image and run 
+
+```
+./buildAndRun.sh
+```
 * Check if it works !
 
 ```
