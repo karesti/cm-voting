@@ -6,8 +6,8 @@ import (
 	"io/ioutil"
 	"encoding/json"
 	"path/filepath"
-//"gopkg.in/mgo.v2/bson"
 	"os"
+	"github.com/revel/revel"
 )
 
 var Session *mgo.Session
@@ -23,16 +23,23 @@ func check(e error) {
 
 func Init() {
 	var err error
-	Session, err = mgo.Dial(os.Getenv("MONGO_PORT_27017_TCP_ADDR"))
-	check(err)
+	if(revel.DevMode){
+		Session, err = mgo.Dial("192.168.99.100")
+		check(err)
+	} else {
+		Session, err = mgo.Dial(os.Getenv("MONGO_PORT_27017_TCP_ADDR"))
+		check(err)
+	}
+
 	Session.SetMode(mgo.Monotonic, true)
-	Days = Session.DB("cmvoting").C("days")
-	Tracks = Session.DB("cmvoting").C("tracks")
-	Slots = Session.DB("cmvoting").C("slots")
+	db:=Session.DB("cmvoting")
+	Days = db.C("days")
+	Tracks = db.C("tracks")
+	Slots = db.C("slots")
+	importReferentData()
 }
 
-func ImportReferentData() {
-
+func importReferentData() {
 	absPath, _ := filepath.Abs("app/db/agenda.json")
 	dat, err := ioutil.ReadFile(absPath)
 	check(err)
@@ -53,6 +60,5 @@ func ImportReferentData() {
 				Slots.Insert(slot)
 			}
 		}
-
 	}
 }

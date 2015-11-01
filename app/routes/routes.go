@@ -16,6 +16,30 @@ func (_ tApp) Index(
 }
 
 
+type tTracks struct {}
+var Tracks tTracks
+
+
+func (_ tTracks) List(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Tracks.List", args).Url
+}
+
+
+type tUsers struct {}
+var Users tUsers
+
+
+func (_ tUsers) Login(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Users.Login", args).Url
+}
+
+
 type tStatic struct {}
 var Static tStatic
 

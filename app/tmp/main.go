@@ -36,8 +36,36 @@ func main() {
 				Args: []*revel.MethodArg{ 
 				},
 				RenderArgNames: map[int][]string{ 
-					22: []string{ 
-						"track",
+					13: []string{ 
+					},
+				},
+			},
+			
+		})
+	
+	revel.RegisterController((*controllers.Tracks)(nil),
+		[]*revel.MethodType{
+			&revel.MethodType{
+				Name: "List",
+				Args: []*revel.MethodArg{ 
+				},
+				RenderArgNames: map[int][]string{ 
+					16: []string{ 
+						"tracks",
+					},
+				},
+			},
+			
+		})
+	
+	revel.RegisterController((*controllers.Users)(nil),
+		[]*revel.MethodType{
+			&revel.MethodType{
+				Name: "Login",
+				Args: []*revel.MethodArg{ 
+				},
+				RenderArgNames: map[int][]string{ 
+					9: []string{ 
 					},
 				},
 			},
