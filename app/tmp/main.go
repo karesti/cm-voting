@@ -36,7 +36,8 @@ func main() {
 				Args: []*revel.MethodArg{ 
 				},
 				RenderArgNames: map[int][]string{ 
-					10: []string{ 
+					22: []string{ 
+						"track",
 					},
 				},
 			},
