@@ -1,0 +1,8 @@
+cm-voting:
+  build: .
+  ports:
+   - 9000:9000
+  links:
+   - mongo_cmvoting
+mongo_cmvoting:
+  image: mongo
