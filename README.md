@@ -43,13 +43,20 @@ If you are lazy :) you can execute buildAndRun.sh which will execute build image
 ```
 ./buildAndRun.sh
 ```
+
+Or with docker-compose :
+
+```
+docker-compose up
+```
+
 * Check if it works !
 
 ```
 http://localhost:9000/
 ```
 
-If you are running on mac like me, you might be using Docker-Machine. The ip on URL should 
+If you are running on mac like me, you might be using Docker-Machine. Instead of using localhost, you must use the IP of your host which can be retrieved via : 
 
 ```
 docker-machine ls
