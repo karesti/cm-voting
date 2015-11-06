@@ -4,6 +4,18 @@ package routes
 import "github.com/revel/revel"
 
 
+type tVoting struct {}
+var Voting tVoting
+
+
+func (_ tVoting) List(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Voting.List", args).Url
+}
+
+
 type tApp struct {}
 var App tApp
 
@@ -25,47 +37,6 @@ func (_ tUsers) Login(
 	args := make(map[string]string)
 	
 	return revel.MainRouter.Reverse("Users.Login", args).Url
-}
-
-
-type tVoting struct {}
-var Voting tVoting
-
-
-func (_ tVoting) List(
-		) string {
-	args := make(map[string]string)
-	
-	return revel.MainRouter.Reverse("Voting.List", args).Url
-}
-
-
-type tStatic struct {}
-var Static tStatic
-
-
-func (_ tStatic) Serve(
-		prefix string,
-		filepath string,
-		) string {
-	args := make(map[string]string)
-	
-	revel.Unbind(args, "prefix", prefix)
-	revel.Unbind(args, "filepath", filepath)
-	return revel.MainRouter.Reverse("Static.Serve", args).Url
-}
-
-func (_ tStatic) ServeModule(
-		moduleName string,
-		prefix string,
-		filepath string,
-		) string {
-	args := make(map[string]string)
-	
-	revel.Unbind(args, "moduleName", moduleName)
-	revel.Unbind(args, "prefix", prefix)
-	revel.Unbind(args, "filepath", filepath)
-	return revel.MainRouter.Reverse("Static.ServeModule", args).Url
 }
 
 
@@ -96,6 +67,35 @@ func (_ tTestRunner) List(
 	args := make(map[string]string)
 	
 	return revel.MainRouter.Reverse("TestRunner.List", args).Url
+}
+
+
+type tStatic struct {}
+var Static tStatic
+
+
+func (_ tStatic) Serve(
+		prefix string,
+		filepath string,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "prefix", prefix)
+	revel.Unbind(args, "filepath", filepath)
+	return revel.MainRouter.Reverse("Static.Serve", args).Url
+}
+
+func (_ tStatic) ServeModule(
+		moduleName string,
+		prefix string,
+		filepath string,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "moduleName", moduleName)
+	revel.Unbind(args, "prefix", prefix)
+	revel.Unbind(args, "filepath", filepath)
+	return revel.MainRouter.Reverse("Static.ServeModule", args).Url
 }
 
 
