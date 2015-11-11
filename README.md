@@ -43,6 +43,13 @@ If you are lazy :) you can execute buildAndRun.sh which will execute build image
 ```
 ./buildAndRun.sh
 ```
+
+Or with docker-compose :
+
+```
+docker-compose up
+```
+
 * Check if it works !
 
 ```

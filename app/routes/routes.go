@@ -4,6 +4,18 @@ package routes
 import "github.com/revel/revel"
 
 
+type tVoting struct {}
+var Voting tVoting
+
+
+func (_ tVoting) List(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Voting.List", args).Url
+}
+
+
 type tApp struct {}
 var App tApp
 
@@ -25,18 +37,6 @@ func (_ tUsers) Login(
 	args := make(map[string]string)
 	
 	return revel.MainRouter.Reverse("Users.Login", args).Url
-}
-
-
-type tVoting struct {}
-var Voting tVoting
-
-
-func (_ tVoting) List(
-		) string {
-	args := make(map[string]string)
-	
-	return revel.MainRouter.Reverse("Voting.List", args).Url
 }
 
 
