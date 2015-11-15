@@ -13,7 +13,7 @@ RUN go get github.com/revel/cmd/revel
 #Install Mgo driver
 RUN go get gopkg.in/mgo.v2
 
-ENTRYPOINT revel run github.com/karesti/cm-voting dev 9000
+ENTRYPOINT revel run github.com/karesti/cm-voting 9000
 
 # Open up the port where the app is running.
 EXPOSE 9000

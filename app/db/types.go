@@ -1,4 +1,5 @@
 package db
+import "gopkg.in/mgo.v2/bson"
 
 type Agenda struct {
 	Id   int
@@ -41,4 +42,10 @@ type Author struct {
 	Name string `bson:"name"`
 	Avatar string `bson:"avatar"`
 	Description string `bson:"description"`
+}
+
+type User struct {
+	ID    bson.ObjectId `bson:"_id,omitempty"`
+	Login string `bson:"login"`
+	Password string `bson:"password"`
 }

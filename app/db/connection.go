@@ -12,6 +12,7 @@ import (
 
 var Session *mgo.Session
 var Days    *mgo.Collection
+var Users   *mgo.Collection
 var Tracks  *mgo.Collection
 var Slots   *mgo.Collection
 
@@ -36,6 +37,7 @@ func Init() {
 	Days = db.C("days")
 	Tracks = db.C("tracks")
 	Slots = db.C("slots")
+	Users = db.C("users")
 	importReferentData()
 }
 
