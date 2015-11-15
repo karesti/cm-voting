@@ -3,6 +3,8 @@ package db
 import (
 	"gopkg.in/mgo.v2"
 	"fmt"
+	"log"	
+        "net"
 	"io/ioutil"
 	"encoding/json"
 	"path/filepath"
@@ -10,6 +12,7 @@ import (
 	"github.com/revel/revel"
 )
 
+const DOMAIN = "marathon.mesos"
 var Session *mgo.Session
 var Days    *mgo.Collection
 var Tracks  *mgo.Collection
@@ -27,9 +30,18 @@ func Init() {
 		Session, err = mgo.Dial("192.168.99.100")
 		check(err)
 	} else {
-		Session, err = mgo.Dial(os.Getenv("MONGO_PORT_27017_TCP_ADDR"))
-		check(err)
+		_, srv, err := net.LookupSRV(os.Getenv("SERVICE_NAME"), "tcp", DOMAIN)
+		if err != nil {
+ 			log.Fatal(err)
+			check(err)
+		} else {
+			port := srv[0].Port
+			url := fmt.Sprintf("%s.%s:%d", os.Getenv("SERVICE_NAME"), DOMAIN, port)
+			fmt.Println("URL : " + url)
+			Session, err = mgo.Dial(url)
+		}
 	}
+
 
 	Session.SetMode(mgo.Monotonic, true)
 	db:=Session.DB("cmvoting")
