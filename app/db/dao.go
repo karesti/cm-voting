@@ -1,7 +1,6 @@
 package db
 import (
 	"gopkg.in/mgo.v2/bson"
-	"errors"
 )
 
 func LoadTracks() []Track {
@@ -28,23 +27,17 @@ func LoadSlots() []Slot {
 	return results
 }
 
+func FindByLogin(login string, userResult *User) (error){
+
+	return Users.Find(bson.M{"login": login}).One(userResult)
+}
+
 func CreateUser(login, password string) (User, error) {
 
 	var result = User{}
 
-	err := Users.Find(bson.M{"Login": login}).One(&result)
+	Users.Insert(&User{Login : login, Password: password})
+	err := Users.Find(bson.M{"login": login}).One(&result)
 
-	if(result.Login == login){
-		return User{}, errors.New("Login already exists")
-	}
-
-	err = Users.Insert(&User{Login : login, Password: password})
-
-	if err != nil {
-		panic(err)
-	}
-
-	err = Users.Find(bson.M{"Login": login}).One(&result)
-
-	return result, nil;
+	return result, err;
 }

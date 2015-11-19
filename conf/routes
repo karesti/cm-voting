@@ -5,8 +5,9 @@
 module:testrunner
 
 GET     /                                       App.Index
-GET     /login                                  Users.Login
+POST    /login                                  Users.Login
 GET     /signup                                 Users.Signup
+POST    /signup                                 Users.Signup
 GET     /voting                                 Voting.List
 
 # Ignore favicon requests

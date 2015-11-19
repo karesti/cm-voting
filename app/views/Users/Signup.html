@@ -1,41 +1,22 @@
 {{set . "title" "Create account"}}
 {{template "header.html" .}}
 
-<header class="hero-unit">
-    <div class="container">
-        <div class="row">
-            <div class="hero-text">
-
-                <form action="{{url "Users.SaveUser"}}" method="POST">
-                {{with $field := field "login" .}}
-                <p class="{{$field.ErrorClass}}">
-                    <strong>Login:</strong>
-                    <input type="text" name="{{$field.Name}}" size="16" value="{{$field.Flash}}"> *
-                    <span class="error">{{$field.Error}}</span>
-                </p>
-                {{end}}
-                {{with $field := field "password" .}}
-                <p class="{{$field.ErrorClass}}">
-                    <strong>Password:</strong> <input type="password" name="{{$field.Name}}" size="16" value="{{$field.Flash}}"> *
-                    <span class="error">{{$field.Error}}</span>
-                </p>
-                {{end}}
-                <p class="buttons">
-                    <input type="submit" value="Signup">
-                </p>
-                </form>
-
-            </div>
-        </div>
-    </div>
-</header>
-
 <div class="container">
-    <div class="row">
-        <div class="span6">
-            {{template "flash.html" .}}
-        </div>
-    </div>
-</div>
+
+    <form class="form-signin" action="{{url "Users.SaveUser"}}" method="POST">
+    <h2 class="form-signin-heading">Create un account</h2>
+    <label for="inputLogin" class="sr-only">Email address</label>
+    {{with $field := field "login" .}}
+    <input type="text" id="inputLogin" name="{{$field.Name}}" class="form-control" placeholder="User name" required autofocus value="{{$field.Flash}}">
+    {{end}}
+    <label for="inputPassword" class="sr-only">Password</label>
+    {{with $field := field "password" .}}
+    <input type="password" id="inputPassword" name="{{$field.Name}}" class="form-control" placeholder="Password" required value="{{$field.Flash}}">
+    {{end}}
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Create account</button>
+    <a href="/"> I have an account </a>
+    </form>
+
+</div> <!-- /container -->
 
 {{template "footer.html" .}}

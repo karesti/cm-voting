@@ -10,8 +10,36 @@ type Users struct {
 	*revel.Controller
 }
 
-func (c Users) Login() revel.Result {
-	return c.Render()
+func (c Users) Login(login, password string) revel.Result {
+	c.Validation.Required(login)
+	c.Validation.Required(password)
+
+	if c.Validation.HasErrors() {
+		c.Validation.Keep()
+		c.FlashParams()
+		return c.Redirect(routes.App.Index())
+	}
+
+	user := db.User{}
+
+	err := db.FindByLogin(login, &user)
+
+	fmt.Print(user)
+	fmt.Print(err)
+	if (err != nil) {
+		c.Flash.Error("User does not exist")
+		return c.Redirect(routes.App.Index())
+	}
+
+	if(user.Password != password){
+		c.Flash.Error("User password does not match")
+		return c.Redirect(routes.App.Index())
+	}
+
+	c.Session["user"] = login
+	c.Flash.Success("Welcome, " + login)
+
+	return c.Redirect(routes.Voting.List())
 }
 
 func (c Users) Signup() revel.Result {
@@ -30,20 +58,17 @@ func (c Users) SaveUser(login, password string) revel.Result {
 		return c.Redirect(routes.Users.Signup())
 	}
 
-	user, err := db.CreateUser(login, password)
+	user := db.User{}
 
-	fmt.Errorf(user)
-	
-	if(err != nil){
-		c.Validation.Keep()
-		c.FlashParams()
+	err := db.FindByLogin(login, &user)
 
-		return c.Redirect(routes.Users.Signup())
+	if (err != nil) {
+		db.CreateUser(login, password)
+		c.Session["user"] = login
+		c.Flash.Success("Welcome, " + login)
+		return c.Redirect(routes.Voting.List())
 	}
 
-
-
-	c.Session["user"] = user.Login
-	c.Flash.Success("Welcome, " + user.Login)
-	return c.Redirect(routes.Voting.List())
+	c.Flash.Error("User already exists")
+	return c.Redirect(routes.Users.Signup())
 }
