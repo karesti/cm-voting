@@ -1,6 +1,10 @@
 # Use the official go docker image built on debian.
 FROM golang
 
+#Install dnsutils
+RUN apt-get update && \
+  apt-get install -q -y dnsmasq dnsutils
+
 # Grab the source code and add it to the workspace.
 ADD . /go/src/github.com/karesti/cm-voting
 

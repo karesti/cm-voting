@@ -9,7 +9,7 @@ Install docker and run the app with the provided image.
 ```
 docker pull mongo
 
-docker run -i -t -name mongo_cmvoting -p 27017:27017 mongo
+docker run -i -t --name mongo_cmvoting -p 27017:27017 mongo
 ```
 
 To check if this is working go to the database console
