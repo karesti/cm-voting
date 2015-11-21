@@ -24,6 +24,8 @@ type Slot struct {
 	Start string `bson:"start"`
 	End string `bson:"end"`
 	TrackId int `bson:"trackId"`
+	DayId int `bson:"dayId"`
+	Vote int `bson:"-"`
 	Contents Content `bson:"content"`
 }
 
@@ -48,4 +50,11 @@ type User struct {
 	ID    bson.ObjectId `bson:"_id,omitempty"`
 	Login string `bson:"login"`
 	Password string `bson:"password"`
+}
+
+type Vote struct {
+	ID    bson.ObjectId `bson:"_id,omitempty"`
+	UserId bson.ObjectId `bson:"userId"`
+	SlotId int `bson:"slotId"`
+	Vote int `bson:"vote"`
 }

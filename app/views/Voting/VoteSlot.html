@@ -1,0 +1,36 @@
+{{set . "title" "Vota !"}}
+{{template "header.html" .}}
+
+<div class="container">
+    {{if .slot}}
+
+    <h2>{{.slot.Contents.Title}}</h2>
+
+    {{.slot.Contents.Description}}
+
+    {{.slot.Vote}}
+
+    <form action="/voting/slot/{{.slot.Id}}/vote" method="POST">
+
+        {{with $field := field "vote" .}}
+        <div class="radio">
+            <label>
+                {{radio $field "1"}}
+                Uno
+            </label>
+        </div>
+        <div class="radio">
+            <label>
+                {{radio $field "2"}}
+               Dos
+            </label>
+        </div>
+        {{end}}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Vote !</button>
+
+    </form>
+
+    {{end}}
+</div>
+
+{{template "footer.html" .}}

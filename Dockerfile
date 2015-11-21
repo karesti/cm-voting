@@ -16,6 +16,7 @@ RUN go get github.com/revel/cmd/revel
 
 #Install Mgo driver
 RUN go get gopkg.in/mgo.v2
+RUN go get golang.org/x/crypto/bcrypt
 
 ENTRYPOINT revel run github.com/karesti/cm-voting 9000
 

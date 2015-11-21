@@ -1,0 +1,51 @@
+{{set . "title" "Tracks"}}
+{{template "header.html" .}}
+
+<header class="hero-unit">
+    <div class="container">
+        <div class="row">
+            <div class="hero-text">
+                <h1>Vote your slot!</h1>
+                <p></p>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6"><a href="/voting">Back</a></div>
+    </div>
+
+    <div class="row">
+        <table class="table-striped">
+            {{if .tracks}}
+
+            {{range .tracks}}
+            <tr>
+                <td>{{.Name}}
+
+                    {{range .Slots}}
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-2">{{.Start}} : {{.End}}</div>
+                                <div class="col-md-8"><a href="/voting/slot/{{.Id}}">{{.Contents.Title}}</a></div>
+                                <div class="col-md-2">{{.Vote}}</div>
+                            </div>
+                        </div>
+                    {{end}}
+                </td>
+
+
+            </tr>
+            {{end}}
+
+            {{end}}
+        </table>
+        <div class="span6">
+            {{template "flash.html" .}}
+        </div>
+    </div>
+</div>
+
+{{template "footer.html" .}}

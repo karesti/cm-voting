@@ -6,9 +6,13 @@ module:testrunner
 
 GET     /                                       App.Index
 POST    /login                                  Users.Login
+GET     /logout                                 App.Logout
 GET     /signup                                 Users.Signup
 POST    /signup                                 Users.Signup
 GET     /voting                                 Voting.List
+GET     /voting/:dayId                          Voting.ListDay
+GET     /voting/slot/:slotId                    Voting.VoteSlot
+POST    /voting/slot/:slotId/vote               Voting.SendVote
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

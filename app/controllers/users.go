@@ -3,11 +3,10 @@ import (
 	"github.com/revel/revel"
 	"github.com/karesti/cm-voting/app/routes"
 	"github.com/karesti/cm-voting/app/db"
-	"fmt"
 )
 
 type Users struct {
-	*revel.Controller
+	App
 }
 
 func (c Users) Login(login, password string) revel.Result {
@@ -24,8 +23,6 @@ func (c Users) Login(login, password string) revel.Result {
 
 	err := db.FindByLogin(login, &user)
 
-	fmt.Print(user)
-	fmt.Print(err)
 	if (err != nil) {
 		c.Flash.Error("User does not exist")
 		return c.Redirect(routes.App.Index())
