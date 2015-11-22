@@ -18,7 +18,7 @@ RUN go get github.com/revel/cmd/revel
 RUN go get gopkg.in/mgo.v2
 RUN go get golang.org/x/crypto/bcrypt
 
-ENTRYPOINT revel run github.com/karesti/cm-voting 9000
+ENTRYPOINT revel run github.com/karesti/cm-voting prod 9000
 
 # Open up the port where the app is running.
 EXPOSE 9000

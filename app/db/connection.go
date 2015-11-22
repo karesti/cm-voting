@@ -32,16 +32,23 @@ func Init() {
 		Session, err = mgo.Dial("192.168.99.100")
 		check(err)
 	} else {
-		_, srv, err := net.LookupSRV(os.Getenv("SERVICE_NAME"), "tcp", DOMAIN)
-		if err != nil {
-			log.Fatal(err)
-			check(err)
-		} else {
-			port := srv[0].Port
-			url := fmt.Sprintf("%s.%s:%d", os.Getenv("SERVICE_NAME"), DOMAIN, port)
-			fmt.Println("URL : " + url)
-			Session, err = mgo.Dial(url)
+
+		Session, err = mgo.Dial(os.Getenv("MONGO_PORT_27017_TCP_ADDR"))
+
+		if (err != nil) {
+			// try mesos
+			_, srv, err := net.LookupSRV(os.Getenv("SERVICE_NAME"), "tcp", DOMAIN)
+			if err != nil {
+				log.Fatal(err)
+				check(err)
+			} else {
+				port := srv[0].Port
+				url := fmt.Sprintf("%s.%s:%d", os.Getenv("SERVICE_NAME"), DOMAIN, port)
+				fmt.Println("URL : " + url)
+				Session, err = mgo.Dial(url)
+			}
 		}
+
 	}
 
 
