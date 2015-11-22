@@ -23,7 +23,7 @@
                          aria-labelledby="heading{{.Id}}">
                         <div class="panel-body">
                             {{range .Slots}}
-                            <p><strong>{{.Start}} : {{.End}}</strong> - <span class="badge">{{.Vote}}</span></p>
+                            <p><strong>{{.Start}} : {{.End}}</strong><input class="rating" data-size="xm" name="vote" readonly value="{{.Vote}}"></p>
                             <p><a href="/voting/slot/{{.Id}}">{{.Contents.Title}}</a></p>
                             {{end}}
                         </div>

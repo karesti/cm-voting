@@ -1,19 +1,33 @@
-{{if .flash.success}}
-<div class="alert alert-success alert-dismissible" role="alert">
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	{{.flash.success}}
-</div>
-{{end}}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            {{if .flash.success}}
+            <br/>
 
-{{if or .errors .flash.error}}
-<div class="alert alert-error" role="alert">
-	{{if .flash.error}}
-		{{.flash.error}}
-	{{end}}
-	<ul style="margin-top:10px;">
-		{{range .errors}}
-			<li>{{.}}</li>
-		{{end}}
-	</ul>
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                {{.flash.success}}
+            </div>
+            {{end}}
+
+            {{if or .errors .flash.error}}
+                <br/>
+                {{if .flash.error}}
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    {{.flash.error}}
+                </div>
+                {{end}}
+                {{range .errors}}
+                <div class="alert alert-danger" role="alert" style="margin-top:10px;">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    {{.}}
+                </div>
+                {{end}}
+            {{end}}
+        </div>
+    </div>
 </div>
-{{end}}

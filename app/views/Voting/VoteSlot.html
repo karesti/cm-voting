@@ -1,33 +1,44 @@
 {{set . "title" "Vota !"}}
 {{template "header.html" .}}
 
+{{if .slot}}
 <div class="container">
-    {{if .slot}}
 
-    <h2>{{.slot.Contents.Title}}</h2>
+    <div class="page-header">
+        <h2>{{.slot.Contents.Title}}</h2>
+    </div>
 
+    <div class="">
     {{.slot.Contents.Description}}
+    </div>
+
+    <h3>Speakers</h3>
+    {{range .slot.Contents.Authors}}
+    <div class="media">
+        <div class="media-left">
+            <a href="#">
+                <img class="media-object" src="{{.Avatar}}" alt="{{.Name}}">
+            </a>
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading">{{.Name}}</h4>
+            {{.Description}}
+        </div>
+    </div>
+    {{end}}
 
     <form action="/voting/slot/{{.slot.Id}}/vote" method="POST">
         {{with $field := field "vote"  .}}
-        <div class="radio">
-            <label>
-                {{radio $field "1"}}
-                Uno
-            </label>
-        </div>
-        <div class="radio">
-            <label>
-                {{radio $field "2"}}
-               Dos
-            </label>
-        </div>
+        <input class="rating" data-size="sm" name="vote" type="number" class="rating" min=0 max=5 step="1"/>
         {{end}}
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Vote !</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+            Vote !
+        </button>
 
     </form>
 
-    {{end}}
 </div>
+{{end}}
 
 {{template "footer.html" .}}
