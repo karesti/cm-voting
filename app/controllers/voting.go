@@ -4,7 +4,6 @@ import (
 	"github.com/karesti/cm-voting/app/db"
 	"github.com/karesti/cm-voting/app/routes"
 	"strconv"
-	"fmt"
 )
 
 type Voting struct {
@@ -34,7 +33,9 @@ func (c Voting) ListDay(dayId int) revel.Result {
 	c.checkConnected()
 	user := c.connected()
 	tracks := db.LoadTracks(dayId, user)
-	return c.Render(tracks)
+	day := db.DayById(dayId)
+	day.Tracks = tracks
+	return c.Render(day)
 }
 
 func (c Voting) VoteSlot(slotId int) revel.Result {
@@ -48,8 +49,7 @@ func (c Voting) VoteSlot(slotId int) revel.Result {
 
 	var vote = db.Vote{}
 	db.FindVoteBySlotAndUser(slotId, user.ID, &vote)
-	fmt.Println(vote)
-	slot.Vote = vote.Vote
+	c.Flash.Data["vote"] = strconv.Itoa(vote.Vote)
 	return c.Render(slot)
 }
 

@@ -14,19 +14,23 @@
 </head>
 <body>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            {{if .user}}
-            <div id="options">
-                Connected as {{.user.Login}}
-                |
-                <a href="/logout">Logout</a>
-            </div>
-            {{end}}
-
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/voting">CM Voting</a>
         </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            {{if .user}}
+            <ul class="nav navbar-nav navbar-right">
+                <li><p class="navbar-text">Connected as {{.user.Login}} </p></li>
+                <li class=""><a href="/logout">Logout<span class="sr-only">(current)</span></a></li>
+            </ul>
+            {{end}}
+        </div>
+        <!--/.nav-collapse -->
     </div>
+</nav>
+<div class="container">
     <div class="row">
         <div class="span6">
             {{template "flash.html" .}}

@@ -1,26 +1,26 @@
 {{set . "title" "Tracks"}}
 {{template "header.html" .}}
 
-<header class="hero-unit">
-    <div class="container">
-        <div class="row">
-            <div class="hero-text">
-                <h1>Vote your slot!</h1>
-
-                <p></p>
-            </div>
-        </div>
-    </div>
-</header>
 
 <div class="container">
-    {{if .days}}
-    {{range .days}}
-    <div class="row">
-        <div class="col-md-6"><a href="/voting/{{.Id}}">{{.Name}}</a></div>
+    <div class="page-header">
+        <h1>Select a day</h1>
     </div>
-    {{end}}
-    {{end}}
+
+    <div class="row">
+        {{if .days}}
+        {{range .days}}
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body text-center">
+                    <span class="glyphicon glyphicon-calendar btn-lg" aria-hidden="true"></span>
+                    <a href="/voting/{{.Id}}">{{.Name}}</a>
+                </div>
+            </div>
+        </div>
+        {{end}}
+        {{end}}
+    </div>
 
 </div>
 

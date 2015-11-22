@@ -16,6 +16,19 @@ func LoadDays() []Day {
 	return results
 }
 
+func DayById(dayId int) Day {
+	var day Day
+
+	err := Days.Find(bson.M{"_id" : dayId}).One(&day)
+
+	if err != nil {
+		panic(err);
+	}
+
+	return day
+}
+
+
 func LoadTracks(dayId int, user *User) []Track {
 	var results []Track
 

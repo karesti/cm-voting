@@ -1,50 +1,37 @@
 {{set . "title" "Tracks"}}
 {{template "header.html" .}}
 
-<header class="hero-unit">
-    <div class="container">
-        <div class="row">
-            <div class="hero-text">
-                <h1>Vote your slot!</h1>
-                <p></p>
+<div class="container">
+    <div class="page-header">
+        <h1>{{.day.Name}} <small>Select a track and a slot</small></h1>
+    </div>
+
+    <div class="row-fluid">
+        {{range .day.Tracks}}
+        <div class="col-md-6">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading{{.Id}}">
+                        <h4 class="panel-title text-center">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{.Id}}"
+                               aria-controls="collapse{{.Id}}">
+                                {{.Name}}
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse{{.Id}}" class="panel-collapse collapse" role="tabpanel"
+                         aria-labelledby="heading{{.Id}}">
+                        <div class="panel-body">
+                            {{range .Slots}}
+                            <p><strong>{{.Start}} : {{.End}}</strong> - <span class="badge">{{.Vote}}</span></p>
+                            <p><a href="/voting/slot/{{.Id}}">{{.Contents.Title}}</a></p>
+                            {{end}}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</header>
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-6"><a href="/voting">Back</a></div>
-    </div>
-
-    <div class="row">
-        <table class="table-striped">
-            {{if .tracks}}
-
-            {{range .tracks}}
-            <tr>
-                <td>{{.Name}}
-
-                    {{range .Slots}}
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-2">{{.Start}} : {{.End}}</div>
-                                <div class="col-md-8"><a href="/voting/slot/{{.Id}}">{{.Contents.Title}}</a></div>
-                                <div class="col-md-2">{{.Vote}}</div>
-                            </div>
-                        </div>
-                    {{end}}
-                </td>
-
-
-            </tr>
-            {{end}}
-
-            {{end}}
-        </table>
-        <div class="span6">
-            {{template "flash.html" .}}
-        </div>
+        {{end}}
     </div>
 </div>
 

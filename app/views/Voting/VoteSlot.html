@@ -8,11 +8,8 @@
 
     {{.slot.Contents.Description}}
 
-    {{.slot.Vote}}
-
     <form action="/voting/slot/{{.slot.Id}}/vote" method="POST">
-
-        {{with $field := field "vote" .}}
+        {{with $field := field "vote"  .}}
         <div class="radio">
             <label>
                 {{radio $field "1"}}
