@@ -27,11 +27,17 @@
     </div>
     {{end}}
 
+    <h3>Vote for this talk</h3>
     <form action="/voting/slot/{{.slot.Id}}/vote" method="POST">
-        {{with $field := field "vote"  .}}
-        <input class="rating" data-size="sm" name="vote" type="number" class="rating" min=0 max=5 step="1"/>
-        {{end}}
-        <button class="btn btn-lg btn-primary btn-block" type="submit">
+        <div class="form-group">
+
+            {{with $field := field "vote"  .}}
+            <input id="votingStars" class="rating" data-size="sm" name="vote" type="number" class="rating" min=0 max=5 step="1" value="{{$field.Flash}}"/>
+            {{end}}
+
+        </div>
+
+        <button class="btn btn-lg btn-primary center-block" type="submit">
             <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
             Vote !
         </button>
