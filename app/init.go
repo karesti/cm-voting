@@ -26,7 +26,8 @@ func init() {
 	// register startup functions with OnAppStart
 	// ( order dependent )
 	revel.OnAppStart(db.Init)
-	revel.InterceptMethod(controllers.App.AddUser, revel.BEFORE)
+	revel.InterceptMethod((*controllers.App).Before, revel.BEFORE)
+	revel.InterceptMethod((*controllers.App).After, revel.AFTER)
 	// revel.OnAppStart(FillCache)
 }
 
