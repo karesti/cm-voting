@@ -1,24 +1,26 @@
 package db
 
 import (
-	"gopkg.in/mgo.v2"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net"
-	"io/ioutil"
-	"encoding/json"
-	"path/filepath"
 	"os"
+	"path/filepath"
+
 	"github.com/revel/revel"
+	"gopkg.in/mgo.v2"
 )
 
 const DOMAIN = "marathon.mesos"
+
 var Session *mgo.Session
-var Users   *mgo.Collection
-var Votes   *mgo.Collection
-var Days    *mgo.Collection
-var Tracks  *mgo.Collection
-var Slots   *mgo.Collection
+var Users *mgo.Collection
+var Votes *mgo.Collection
+var Days *mgo.Collection
+var Tracks *mgo.Collection
+var Slots *mgo.Collection
 
 func check(e error) {
 	if e != nil {
@@ -28,14 +30,14 @@ func check(e error) {
 
 func Init() {
 	var err error
-	if (revel.DevMode) {
+	if revel.DevMode {
 		Session, err = mgo.Dial("192.168.99.100")
 		check(err)
 	} else {
 
 		Session, err = mgo.Dial(os.Getenv("MONGO_PORT_27017_TCP_ADDR"))
 
-		if (err != nil) {
+		if err != nil {
 			// try mesos
 			_, srv, err := net.LookupSRV(os.Getenv("SERVICE_NAME"), "tcp", DOMAIN)
 			if err != nil {
@@ -50,7 +52,6 @@ func Init() {
 		}
 
 	}
-
 
 	Session.SetMode(mgo.Monotonic, true)
 	db := Session.DB("cmvoting")
@@ -80,7 +81,7 @@ func importReferentData() {
 			track.DayId = day.Id
 			Tracks.Insert(track)
 			for _, slot := range track.Slots {
-				if (slot.Contents.Title != "" && slot.Contents.Type == "TALK" ) {
+				if slot.Contents.Title != "" && slot.Contents.Type == "TALK" {
 					slot.DayId = day.Id
 					Slots.Insert(slot)
 				}

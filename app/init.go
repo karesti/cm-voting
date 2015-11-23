@@ -1,9 +1,9 @@
 package app
 
 import (
-	"github.com/revel/revel"
-	"github.com/karesti/cm-voting/app/db"
 	"github.com/karesti/cm-voting/app/controllers"
+	"github.com/karesti/cm-voting/app/db"
+	"github.com/revel/revel"
 )
 
 func init() {

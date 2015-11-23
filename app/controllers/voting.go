@@ -1,9 +1,11 @@
 package controllers
+
 import (
-	"github.com/revel/revel"
+	"strconv"
+
 	"github.com/karesti/cm-voting/app/db"
 	"github.com/karesti/cm-voting/app/routes"
-	"strconv"
+	"github.com/revel/revel"
 )
 
 type Voting struct {
@@ -44,7 +46,7 @@ func (c Voting) VoteSlot(slotId int) revel.Result {
 	var slot = db.Slot{}
 	err := db.FindSlotById(slotId, &slot)
 	if err != nil {
-		panic(err);
+		panic(err)
 	}
 
 	var vote = db.Vote{}
@@ -56,22 +58,21 @@ func (c Voting) VoteSlot(slotId int) revel.Result {
 func (c Voting) SendVote(vote int) revel.Result {
 	c.checkConnected()
 	slotId, err := strconv.Atoi(c.Params.Get("slotId"))
-	if (err != nil) {
+	if err != nil {
 		panic(err)
 	}
 	var slot = db.Slot{}
 	err = db.FindSlotById(slotId, &slot)
-	if (err != nil) {
+	if err != nil {
 		panic(err)
 	}
 
 	user := c.connected()
 
-	err = db.SaveVote(&db.Vote{UserId : user.ID, SlotId: slot.Id, Vote : vote})
+	err = db.SaveVote(&db.Vote{UserId: user.ID, SlotId: slot.Id, Vote: vote})
 	if err != nil {
-		panic(err);
+		panic(err)
 	}
 
 	return c.Redirect(routes.Voting.ListDay(slot.DayId))
 }
-
