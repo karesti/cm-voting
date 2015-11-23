@@ -3,6 +3,6 @@ cm-voting:
   ports:
    - 9000:9000
   links:
-   - mongo_cmvoting
-mongo_cmvoting:
+   - mongo:mongo
+mongo:
   image: mongo

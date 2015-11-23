@@ -1,16 +1,18 @@
 package controllers
+
 import (
-	"github.com/revel/revel"
+	"strconv"
+
 	"github.com/karesti/cm-voting/app/db"
 	"github.com/karesti/cm-voting/app/routes"
-	"strconv"
+	"github.com/revel/revel"
 )
 
 type Voting struct {
 	App
 }
 
-func (c Voting) checkConnected() revel.Result {
+func (c *Voting) checkConnected() revel.Result {
 	if user := c.connected(); user == nil {
 		c.Flash.Error("Please log in first")
 		return c.Redirect(routes.App.Index())
@@ -18,60 +20,59 @@ func (c Voting) checkConnected() revel.Result {
 	return nil
 }
 
-func (c Voting) List() revel.Result {
+func (c *Voting) List() revel.Result {
 	c.checkConnected()
 	if user := c.connected(); user == nil {
 		c.Flash.Error("Please log in first")
 		return c.Redirect(routes.App.Index())
 	}
 
-	days := db.LoadDays()
+	days := c.db.LoadDays()
 	return c.Render(days)
 }
 
-func (c Voting) ListDay(dayId int) revel.Result {
+func (c *Voting) ListDay(dayId int) revel.Result {
 	c.checkConnected()
 	user := c.connected()
-	tracks := db.LoadTracks(dayId, user)
-	day := db.DayById(dayId)
+	tracks := c.db.LoadTracks(dayId, user)
+	day := c.db.DayById(dayId)
 	day.Tracks = tracks
 	return c.Render(day)
 }
 
-func (c Voting) VoteSlot(slotId int) revel.Result {
+func (c *Voting) VoteSlot(slotId int) revel.Result {
 	c.checkConnected()
 	user := c.connected()
 	var slot = db.Slot{}
-	err := db.FindSlotById(slotId, &slot)
+	err := c.db.FindSlotById(slotId, &slot)
 	if err != nil {
-		panic(err);
+		panic(err)
 	}
 
 	var vote = db.Vote{}
-	db.FindVoteBySlotAndUser(slotId, user.ID, &vote)
+	c.db.FindVoteBySlotAndUser(slotId, user.ID, &vote)
 	c.Flash.Data["vote"] = strconv.Itoa(vote.Vote)
 	return c.Render(slot)
 }
 
-func (c Voting) SendVote(vote int) revel.Result {
+func (c *Voting) SendVote(vote int) revel.Result {
 	c.checkConnected()
 	slotId, err := strconv.Atoi(c.Params.Get("slotId"))
-	if (err != nil) {
+	if err != nil {
 		panic(err)
 	}
 	var slot = db.Slot{}
-	err = db.FindSlotById(slotId, &slot)
-	if (err != nil) {
+	err = c.db.FindSlotById(slotId, &slot)
+	if err != nil {
 		panic(err)
 	}
 
 	user := c.connected()
 
-	err = db.SaveVote(&db.Vote{UserId : user.ID, SlotId: slot.Id, Vote : vote})
+	err = c.db.SaveVote(&db.Vote{UserId: user.ID, SlotId: slot.Id, Vote: vote})
 	if err != nil {
-		panic(err);
+		panic(err)
 	}
 
 	return c.Redirect(routes.Voting.ListDay(slot.DayId))
 }
-

@@ -1,9 +1,9 @@
 package app
 
 import (
-	"github.com/revel/revel"
-	"github.com/karesti/cm-voting/app/db"
 	"github.com/karesti/cm-voting/app/controllers"
+	"github.com/karesti/cm-voting/app/db"
+	"github.com/revel/revel"
 )
 
 func init() {
@@ -26,7 +26,8 @@ func init() {
 	// register startup functions with OnAppStart
 	// ( order dependent )
 	revel.OnAppStart(db.Init)
-	revel.InterceptMethod(controllers.App.AddUser, revel.BEFORE)
+	revel.InterceptMethod((*controllers.App).Before, revel.BEFORE)
+	revel.InterceptMethod((*controllers.App).After, revel.AFTER)
 	// revel.OnAppStart(FillCache)
 }
 
