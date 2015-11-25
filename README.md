@@ -29,13 +29,13 @@ mongo --host 192.168.99.100 (or localhost if you are not on using like me a dock
 ```
 cd cm-voting
 
-docker build -t cm-voting .
+docker build -t karesti/cm_voting .
 ```
 
 * Run the docker image linking the already running MongoDB container
 
 ```
-docker run -i -t -p 9000:9000 --link mongo_cmvoting:mongo cm-voting env
+docker run -i -t -p 9000:9000 --link mongo_cmvoting:mongo karesti/cm_voting
 ```
 
 If you are lazy :) you can execute buildAndRun.sh which will execute build image and run 
