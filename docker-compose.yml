@@ -1,4 +1,4 @@
-cm-voting:
+cmvoting:
   build: .
   ports:
    - 9000:9000
