@@ -4,7 +4,7 @@ cm-voting:
    - 9000:9000
   links:
    - mongo:mongo
+  environment:
+   - MONGO_PORT_27017_TCP_ADDR:localhost
 mongo:
   image: mongo
-environment:
-  MONGO_PORT_27017_TCP_ADDR:localhost
