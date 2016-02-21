@@ -40,8 +40,7 @@ func Init() {
 				log.Fatal(err)
 				check(err)
 			} else {
-				port := srv[0].Port
-				url := fmt.Sprintf("%s.%s:%d", os.Getenv("SERVICE_NAME"), DOMAIN, port)
+				url := fmt.Sprintf("%s:%d", srv[0].Target, srv[0].Port)
 				fmt.Println("URL : " + url)
 				session, err = mgo.Dial(url)
 			}
