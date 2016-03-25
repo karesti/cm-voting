@@ -3,8 +3,10 @@ cmvoting:
   ports:
    - 9000:9000
   links:
-   - mongo:mongo
+   - mongo
   environment:
    - MONGO_PORT_27017_TCP_ADDR:localhost
 mongo:
   image: mongo
+  ports:
+   - 27017:27017
